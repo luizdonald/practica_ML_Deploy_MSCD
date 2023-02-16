@@ -4,23 +4,36 @@ FROM python:3.11
 RUN adduser --disabled-password --gecos '' ml-api-user
 
 #WORKDIR /opt/house-prices-api
-WORKDIR /opt/ML_Deploy_MSCD/section-08-deploying-with-containers/house-prices-api
+WORKDIR /opt/practica_ML_Deploy_MSCD/section-08-deploying-with-containers/house-prices-api
 
 ARG PIP_EXTRA_INDEX_URL
 
 # Install requirements, including from Gemfury
 #ADD ./house-prices-api /opt/house-prices-api/
-#RUN pip install --upgrade pip
-#RUN pip install -r /opt/house-prices-api/requirements.txt
 
+#RUN apt-get update
 RUN apt-get install -y git
 
-RUN git clone https://github.com/luizdonald/practica_ML_Deploy_MSCD.git ./opt
-RUN git pull 
+#RUN cd /opt
+RUN git clone https://github.com/luizdonald/practica_ML_Deploy_MSCD.git ./opt/practica_ML_Deploy_MSCD
 
-WORKDIR /opt/ML_Deploy_MSCD/section-08-deploying-with-containers/house-prices-api
+#COPY /ML_Deploy_MSCD/section-08-deploying-with-containers /opt/practica_ML_Deploy_MSCD
+WORKDIR /opt/practica_ML_Deploy_MSCD/section-08-deploying-with-containers/house-prices-api
 
-RUN chmod +x /opt/ML_Deploy_MSCD/section-08-deploying-with-containers/house-prices-api/run.sh
+ARG PIP_EXTRA_INDEX_URL
+
+# Install requirements, including from Gemfury
+#ADD ./house-prices-api /opt/house-prices-api/
+
+RUN apt-get update
+RUN apt-get install -y git
+
+RUN pip install --upgrade pip
+RUN pip install -r /opt/practica_ML_Deploy_MSCD/section-08-deploying-with-containers/house-prices-api/requirements.txt
+
+#WORKDIR /opt/practica_ML_Deploy_MSCD/section-08-deploying-with-containers/house-prices-api
+
+RUN chmod +x /opt/practica_ML_Deploy_MSCD/section-08-deploying-with-containers/house-prices-api/run.sh
 RUN chown -R ml-api-user:ml-api-user ./
 
 USER ml-api-user
