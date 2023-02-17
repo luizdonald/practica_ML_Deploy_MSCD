@@ -1,20 +1,30 @@
 pipeline{
-	agent any
-	
-	stages{
-		stage('Checkout...'){
+    agent any
+    
+    stages{
+        stage('Checkout...'){
             steps{
                 echo "Checkout code..."
             }
         }
-        stage('Bluid'){
-            steps{
-                echo "Bluid the code ..."
+        
+        stage('Hello'){
+            steps{                
+                sh "python3 section-08-deploying-with-containers/hello.py"                
             }
         }
-        stage('Deploying'){
+        
+        stage('TOX-Train model..'){
             steps{
-                echo "Deploying to test env..."
+                echo "running text on Section-05 Model Package"
+                //sh "python section-05-production-model-package/regression_model/train_pipeline.py"                
+                sh "python3 -m tox -c section-05-production-model-package/tox.ini -e test_package"
+            }
+        }
+
+        stage('Deploying to prod'){
+            steps{
+                echo "Deploying to prod env..."
             }
         }
     }
