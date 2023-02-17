@@ -1,0 +1,21 @@
+pipeline{
+	agent any
+	
+	stages{
+		stage('Checkout...'){
+            steps{
+                echo "Checkout code..."
+            }
+        }
+        stage('Bluid'){
+            steps{
+                echo "Bluid the code ..."
+            }
+        }
+        stage('Deploying'){
+            steps{
+                echo "Deploying to test env..."
+            }
+        }
+    }
+}
